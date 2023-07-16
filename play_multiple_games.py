@@ -1,13 +1,13 @@
 from Game import Game
 
-def play_multiple_games(bot1, bot2, num_games):
+def play_multiple_games(bot1, bot2, num_games, draw=False, board=[]):
     # Initialize win counters
     bot1_wins = 0
     bot2_wins = 0
 
     for i in range(num_games):
         # Create a new game
-        game = Game(bot1, bot2)
+        game = Game(bot1, bot2, draw=draw, board=board)
         # Play the game to completion
         game.play_game()
         # Check who won and increment the appropriate counter

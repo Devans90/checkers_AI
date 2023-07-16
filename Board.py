@@ -82,3 +82,4 @@ class Board:
 
 		for tile in self.tile_list:
 			tile.draw(display)
+		pygame.display.update()

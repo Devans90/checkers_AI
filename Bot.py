@@ -37,6 +37,9 @@ class Bot(ABC):
 class RandomBot(Bot):
     def select_move(self, game_state):
         # This bot selects a move randomly from the list of legal moves.
-        # Note: You'll need to implement the get_legal_moves function.
         legal_moves = get_legal_moves(game_state, self.colour)
+        if not legal_moves:
+            # There are no legal moves, so the bot forfeits the game
+            return None
         return random.choice(legal_moves)
+

@@ -46,6 +46,8 @@ class Checkers:
 
 # 	# checkers = Checkers(screen)
 # 	# checkers.main(window_size[0], window_size[1])
+
+
 #     def play_multiple_games(bot1, bot2, num_games):
 #         # Initialize win counters
 #         bot1_wins = 0
