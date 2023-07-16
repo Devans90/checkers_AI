@@ -1,20 +1,16 @@
 import pygame
 from Piece import Piece
 
-class Pawn(Piece):
+class King(Piece):
 	def __init__(self, x, y, color, board):
 		super().__init__(x, y, color, board)
-		img_path = f'images/{color}-pawn.png'
+		img_path = f'images/{color}-king.png'
 		self.img = pygame.image.load(img_path)
 		self.img = pygame.transform.scale(self.img, (board.tile_width, board.tile_height))
-		self.notation = 'p'
+		self.notation = 'k'
 
 	def _possible_moves(self):
-		# (x, y) move for left and right
-		if self.color == "red":
-			possible_moves = ((-1, -1), (+1, -1)) 
-		else:
-			possible_moves = ((-1, +1), (+1, +1))
+		possible_moves = ((-1, -1), (+1, -1), (-1, +1), (+1, +1))
 		return possible_moves
 
 	def valid_moves(self):
