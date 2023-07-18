@@ -1,5 +1,5 @@
 from Board import Board
-from Bot import Bot
+from Bot import Bot, get_legal_moves
 import pygame
 
 class Game:
@@ -42,7 +42,14 @@ class Game:
                     # Get the bot's selected move
                     move = current_bot.select_move(self.board)
                     # Apply the move to the board
-                    move_made = self.apply_move(move)
+
+                    if not move:
+                        # no legal moves.... loss?
+                        self.is_game_over(self.board)
+                        pass
+                    else:
+                        move_made = self.apply_move(move)
+
                     if self.draw:
                         self.board.draw(self.drawboard)  # Draw the board after the move
     
@@ -61,6 +68,18 @@ class Game:
         # Call the _move method on the piece with the end tile as argument
         piece._move(end_tile)
         # Check if the piece has moved
+
+        # Update the current board state
+        state = []
+        for tile in self.board.tile_list:
+            if hasattr(tile.occupying_piece, 'color'):
+                state.append(tile.occupying_piece.color)
+            else:
+                state.append('None')
+
+        self.board.current_state = state
+
+
         if piece.pos == old_pos:
             # If the piece hasn't moved, ask the bot for another move
             print(f"The piece hasn't moved.[{self.board.turn}'s turn] Asking the bot for another move...")
@@ -70,18 +89,29 @@ class Game:
             if self.is_game_over(self.board):
                 return True
             # If the piece has moved and there are no valid jumps, change the turn
-            print('turn_complete')
+            print(f'turn_complete - {self.board.turn}')
             if not len(piece.valid_jumps()):
                 self.board.turn = 'red' if self.board.turn == 'black' else 'black'
             return True
 
     def is_game_over(self, board):
         red_piece, black_piece = self.check_piece(board)
+
+        # Check if any player has no pieces left
         if red_piece == 0 or black_piece == 0:
             self.winner = "red" if red_piece > black_piece else "black"
             return True
-        else:
-            return False
+
+        # Check if any player has no legal moves
+        red_moves = get_legal_moves(board, 'red')
+        black_moves = get_legal_moves(board, 'black')
+        if len(red_moves) == 0 or len(black_moves) == 0:
+            self.winner = "red" if red_piece > black_piece else "black"
+            self.message()
+            return True
+
+        return False
+
 
     def check_jump(self, board):
         piece = None
@@ -99,4 +129,9 @@ class Game:
         return board.is_jump
 
     def message(self):
+        print('_______')
+        print('_______')
         print(f"{self.winner} Wins!!")
+        print('_______')
+        print('_______')
+

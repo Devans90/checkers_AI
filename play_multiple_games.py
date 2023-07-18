@@ -11,9 +11,9 @@ def play_multiple_games(bot1, bot2, num_games, draw=False, board=[]):
         # Play the game to completion
         game.play_game()
         # Check who won and increment the appropriate counter
-        if game.winner == bot1.color:
+        if game.winner == bot1.colour:
             bot1_wins += 1
-        elif game.winner == bot2.color:
+        elif game.winner == bot2.colour:
             bot2_wins += 1
 
     # Return the win-loss record for each bot

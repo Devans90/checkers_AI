@@ -12,7 +12,9 @@ class Piece:
 		for i in self.board.tile_list:
 			i.highlight = False
 
-		if tile in self.valid_moves() and not self.board.is_jump:
+		# if tile in self.valid_moves() and not self.board.is_jump:
+		if not self.board.is_jump:
+
 			prev_tile = self.board.get_tile_from_pos(self.pos)
 			self.pos, self.x, self.y = tile.pos, tile.x, tile.y
 

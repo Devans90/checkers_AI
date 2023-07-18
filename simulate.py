@@ -33,7 +33,7 @@ bot1 = RandomBot('red')
 bot2 = RandomBot('black')
 
 # Decide how many games to play
-num_games = 2
+num_games = 4
 game = Game(bot1, bot2)
 
 
